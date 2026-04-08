@@ -322,45 +322,68 @@ body {
 .space-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .space-item {
-  background: var(--white);
-  padding: 40px 20px;
-  border-radius: 8px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 40px 30px;
+  border-radius: 12px;
   text-align: center;
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.space-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-blue), #0077aa);
 }
 
 .space-item:hover {
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,153,204,0.2);
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--primary-blue);
 }
 
 .space-illustration {
-  font-size: 4.5rem;
-  margin-bottom: 20px;
+  font-size: 5rem;
+  margin-bottom: 25px;
   display: block;
-  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+  filter: drop-shadow(0 6px 12px rgba(0,153,204,0.15));
+  transform: perspective(600px) rotateY(-10deg) rotateX(5deg);
+  transition: transform 0.3s;
+}
+
+.space-item:hover .space-illustration {
+  transform: perspective(600px) rotateY(0deg) rotateX(0deg) scale(1.1);
 }
 
 .space-badge {
   background: var(--primary-blue);
   color: var(--white);
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.85rem;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 0.9rem;
   display: inline-block;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
 }
 
 .space-size {
-  font-size: 0.95rem;
-  color: var(--text-light);
-  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--dark-gray);
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 /* SPACE SPECS */
