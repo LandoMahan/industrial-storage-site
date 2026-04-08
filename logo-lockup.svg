@@ -1,0 +1,53 @@
+<svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="warehouseGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0099cc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0077aa;stop-opacity:1" />
+    </linearGradient>
+    <style>
+      .logo-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      .main-text { font-size: 32px; font-weight: 900; fill: #1a1a1a; letter-spacing: -0.5px; }
+      .tagline-text { font-size: 12px; font-weight: 600; fill: #0099cc; letter-spacing: 1px; text-transform: uppercase; }
+    </style>
+  </defs>
+  
+  <!-- Logo Icon -->
+  <g transform="translate(20, 40)">
+    <!-- Warehouse Building Icon -->
+    <!-- Main warehouse structure -->
+    <rect x="10" y="30" width="70" height="48" fill="none" stroke="url(#warehouseGradient)" stroke-width="2" rx="1"/>
+    
+    <!-- Roof -->
+    <polygon points="10,30 45,10 80,30" fill="none" stroke="url(#warehouseGradient)" stroke-width="2" stroke-linejoin="round"/>
+    
+    <!-- Large loading door -->
+    <rect x="20" y="42" width="50" height="35" fill="none" stroke="#0099cc" stroke-width="1.5"/>
+    
+    <!-- Door divide line -->
+    <line x1="45" y1="42" x2="45" y2="77" stroke="#0099cc" stroke-width="1.5"/>
+    
+    <!-- Door handles -->
+    <circle cx="33" cy="59" r="1.5" fill="#0099cc"/>
+    <circle cx="57" cy="59" r="1.5" fill="#0099cc"/>
+    
+    <!-- Small windows -->
+    <rect x="15" y="33" width="7" height="6" fill="none" stroke="#0099cc" stroke-width="1" rx="0.5"/>
+    <rect x="68" y="33" width="7" height="6" fill="none" stroke="#0099cc" stroke-width="1" rx="0.5"/>
+    
+    <!-- Roofline accent (gold) -->
+    <line x1="10" y1="30" x2="80" y2="30" stroke="#ffdb58" stroke-width="1.5" opacity="0.8"/>
+    
+    <!-- Foundation line -->
+    <line x1="10" y1="78" x2="80" y2="78" stroke="#0099cc" stroke-width="1.5"/>
+    
+    <!-- Accent geometric shape -->
+    <polygon points="45,12 47,18 43,18" fill="#ffdb58" opacity="0.9"/>
+  </g>
+  
+  <!-- Text -->
+  <g class="logo-text">
+    <text x="130" y="70" class="main-text">INDUSTRIAL</text>
+    <text x="130" y="110" class="main-text">STORAGE</text>
+    <text x="130" y="135" class="tagline-text">PROFESSIONAL WAREHOUSE SPACE</text>
+  </g>
+</svg>
