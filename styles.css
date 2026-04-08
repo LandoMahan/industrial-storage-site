@@ -132,48 +132,108 @@ body {
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
-  min-width: 100px;
 }
 
 .logo-icon {
-  font-size: 1.5rem;
+  font-size: 2rem;
+  color: var(--primary-blue);
 }
 
 .logo-text {
   display: flex;
   flex-direction: column;
-  gap: 0px;
-  line-height: 1.1;
+  gap: 1px;
+  line-height: 1.2;
 }
 
 .logo-main {
-  font-weight: 700;
-  font-size: 0.7rem;
+  font-weight: 800;
+  font-size: 0.75rem;
   letter-spacing: 0.5px;
   color: var(--dark-gray);
 }
 
 .logo-sub {
-  font-weight: 700;
-  font-size: 0.6rem;
-  letter-spacing: 0.5px;
-  color: var(--primary-blue);
+  font-weight: 600;
+  font-size: 0.5rem;
+  letter-spacing: 0.3px;
+  color: var(--dark-gray);
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  flex-shrink: 0;
+}
+
+.hamburger span {
+  width: 24px;
+  height: 2.5px;
+  background: var(--dark-gray);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translateY(8px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-8px);
 }
 
 .nav-menu {
   display: none;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  flex-direction: column;
+  gap: 0;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-menu.active {
+  display: flex;
 }
 
 .nav-menu a {
   text-decoration: none;
   color: var(--text);
   font-weight: 500;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   transition: color 0.3s;
+  padding: 12px 20px;
+  display: block;
+  border-bottom: 1px solid var(--border);
 }
 
 .nav-menu a:hover {
   color: var(--primary-blue);
+  background: var(--light-gray);
+}
+
+.nav-menu .contact-button {
+  background: var(--primary-blue);
+  color: var(--white);
+  margin: 10px 20px 0;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  text-align: center;
+  border: none;
+  border-bottom: 0;
 }
 
 .contact-button {
@@ -187,6 +247,8 @@ body {
   white-space: nowrap;
   transition: background 0.3s;
   flex-shrink: 0;
+  border: none;
+  cursor: pointer;
 }
 
 .contact-button:hover {
@@ -283,30 +345,7 @@ body {
   display: block;
 }
 
-.carousel-dots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  padding: 15px 0;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(255,255,255,0.8);
-}
 
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #ccc;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.dot.active {
-  background: var(--primary-blue);
-}
 
 /* WHY US SECTION */
 .why-us {
