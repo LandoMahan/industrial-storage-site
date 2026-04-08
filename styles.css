@@ -77,18 +77,16 @@ body {
 .top-bar {
   background: var(--dark-gray);
   color: var(--white);
-  padding: 8px 0;
-  font-size: 0.8rem;
+  padding: 10px 0;
+  font-size: 0.9rem;
   display: none;
 }
 
 .top-bar-content {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  flex-direction: column;
-  gap: 4px;
-  text-align: center;
+  gap: 15px;
 }
 
 .divider {
@@ -98,14 +96,6 @@ body {
 @media (min-width: 1025px) {
   .top-bar {
     display: block;
-    padding: 10px 0;
-    font-size: 0.9rem;
-  }
-
-  .top-bar-content {
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 15px;
   }
 }
 
