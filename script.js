@@ -1,11 +1,11 @@
-// Industrial Storage — Enhanced JavaScript
+// Industrial Storage — JavaScript
 
 // Pricing Calculator
 document.getElementById('sqftCalc')?.addEventListener('input', function() {
   const sqft = parseFloat(this.value) || 0;
   const rate = 1.20;
   const monthly = (sqft * rate).toFixed(2);
-  document.getElementById('calcOutput').textContent = `$${monthly.toLocaleString()} / month`;
+  document.getElementById('calcOutput').textContent = '$' + monthly.toLocaleString() + ' / month';
 });
 
 // Form Submission
@@ -31,17 +31,63 @@ document.getElementById('inquiryForm')?.addEventListener('submit', async functio
 
     const result = await response.json();
     if (result.success) {
-      alert('Thank you! We\'ll be in touch shortly.');
+      alert('Thank you! We will contact you shortly.');
       document.getElementById('inquiryForm').reset();
     } else {
       alert('Error: ' + (result.error || 'Failed to submit'));
     }
   } catch (error) {
-    console.error('Submission error:', error);
-    // Fallback: still show success message even if email fails
-    alert('Inquiry received. We\'ll contact you soon.');
+    console.error('Error:', error);
+    alert('Inquiry received. We will contact you soon.');
     document.getElementById('inquiryForm').reset();
   }
+});
+
+// Photo Upload Handler
+document.getElementById('photoUploadForm')?.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const fileInput = document.getElementById('photoInput');
+  const file = fileInput.files[0];
+  const statusEl = document.getElementById('uploadStatus');
+
+  if (!file) {
+    statusEl.textContent = 'Please select a photo';
+    return;
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    statusEl.textContent = 'File too large (max 5MB)';
+    return;
+  }
+
+  statusEl.textContent = 'Uploading...';
+
+  const reader = new FileReader();
+  reader.onload = async function(event) {
+    try {
+      const response = await fetch('/api/upload-photo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ photoData: event.target.result })
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        statusEl.textContent = '✓ Photo uploaded! Refreshing gallery...';
+        fileInput.value = '';
+        setTimeout(() => {
+          loadGallery();
+          statusEl.textContent = '';
+        }, 1500);
+      } else {
+        statusEl.textContent = '✗ Upload failed: ' + (result.error || 'Unknown error');
+      }
+    } catch (error) {
+      statusEl.textContent = '✗ Error uploading photo';
+      console.error(error);
+    }
+  };
+  reader.readAsDataURL(file);
 });
 
 // Gallery Loading
@@ -53,22 +99,15 @@ async function loadGallery() {
     const gallery = document.getElementById('galleryGrid');
     
     if (!photos || photos.length === 0) {
-      gallery.innerHTML = `
-        <div class="gallery-placeholder" style="grid-column: 1 / -1;">
-          <div class="placeholder-text">📧 Send photos to johnmahan@westpatrick.com to display them here</div>
-        </div>
-      `;
+      gallery.innerHTML = '<div class="gallery-placeholder" style="grid-column: 1 / -1;"><div class="placeholder-text">No photos yet. Upload one using the form below!</div></div>';
       return;
     }
 
-    gallery.innerHTML = photos.map(photo => `
-      <div class="gallery-item">
-        <img src="${photo.url}" alt="Industrial storage space" loading="lazy">
-      </div>
-    `).join('');
+    gallery.innerHTML = photos.map(photo => 
+      '<div class="gallery-item"><img src="' + photo.url + '" alt="Industrial storage" loading="lazy"></div>'
+    ).join('');
   } catch (error) {
-    console.log('Gallery loading skipped (no photos yet)');
-    // Silently fail — photos come via email
+    console.log('Gallery loading skipped');
   }
 }
 
@@ -88,4 +127,4 @@ document.addEventListener('DOMContentLoaded', function() {
   loadGallery();
 });
 
-console.log('Industrial Storage — Ready');
+console.log('Industrial Storage Ready');

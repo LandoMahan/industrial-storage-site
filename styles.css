@@ -612,3 +612,79 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* PHOTO UPLOAD */
+.photo-form {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.file-input-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+#photoInput {
+  display: none;
+}
+
+.file-input-wrapper label {
+  display: block;
+  padding: 12px;
+  background-color: var(--steel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+  text-align: center;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.file-input-wrapper label:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.upload-button {
+  padding: 12px 30px;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.upload-button:hover {
+  background-color: #ff5420;
+}
+
+.admin-section {
+  background-color: var(--dark);
+  border: 2px dashed var(--border);
+  padding: 30px;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.admin-toggle {
+  padding: 10px 20px;
+  background-color: var(--steel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.admin-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .photo-form {
+    flex-direction: column;
+  }
+}

@@ -6,12 +6,19 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const sqlite3 = require('sqlite3').verbose();
 const nodemailer = require('nodemailer');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ─── DATABASE SETUP ───────────────────────────────────────────────────────────
+// Create uploads directory on startup
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+  console.log('✓ Uploads directory created');
+}
 
+// DATABASE SETUP
 const db = new sqlite3.Database(path.join(__dirname, 'inquiries.db'));
 
 db.serialize(() => {
@@ -32,8 +39,7 @@ db.serialize(() => {
   console.log('✓ Database initialized');
 });
 
-// ─── EMAIL SETUP ──────────────────────────────────────────────────────────────
-
+// EMAIL SETUP
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -42,27 +48,24 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// ─── MIDDLEWARE ────────────────────────────────────────────────────────────────
-
+// MIDDLEWARE
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Static files (index.html, styles.css, script.js)
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.static(path.join(__dirname)));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// ─── ROUTES ───────────────────────────────────────────────────────────────────
+// ROUTES
 
 // Homepage
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// API: Submit inquiry
+// Submit inquiry
 app.post('/api/inquiries', async (req, res) => {
   const { name, company, email, phone, sqft, duration, details } = req.body;
 
-  // Validate
   if (!name || !company || !email || !phone || !sqft || !duration) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
@@ -70,7 +73,6 @@ app.post('/api/inquiries', async (req, res) => {
   const id = uuidv4();
   const estimatedMonthly = (parseFloat(sqft) * 1.20).toFixed(2);
 
-  // Save to database
   db.run(
     'INSERT INTO inquiries (id, name, company, email, phone, sqft, duration, details) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
     [id, name, company, email, phone, sqft, duration, details],
@@ -80,66 +82,73 @@ app.post('/api/inquiries', async (req, res) => {
         return res.status(500).json({ error: 'Failed to save inquiry' });
       }
 
-      // Send email notifications
       try {
-        const customerEmailHtml = buildCustomerEmail(name, sqft, duration, estimatedMonthly);
-        const ownerEmailHtml = buildOwnerEmail(name, company, email, phone, sqft, duration, estimatedMonthly, details);
-
-        // Email to customer
         await transporter.sendMail({
           from: process.env.EMAIL_USER,
           to: email,
           subject: 'Industrial Storage Inquiry Received',
-          html: customerEmailHtml
-        });
-
-        // Email to owner
-        await transporter.sendMail({
-          from: process.env.EMAIL_USER,
-          to: process.env.OWNER_EMAIL,
-          subject: 'New Storage Inquiry: ' + company,
-          html: ownerEmailHtml
+          html: 'Thank you for your inquiry. We will contact you shortly.'
         });
 
         console.log('✓ Inquiry saved:', id);
-        res.status(200).json({ success: true, id, estimatedMonthly });
-      } catch (emailErr) {
-        console.error('Email error:', emailErr);
-        res.status(200).json({ success: true, id, estimatedMonthly, note: 'Inquiry saved (email notification may have failed)' });
+        res.json({ success: true, id, estimatedMonthly });
+      } catch (e) {
+        console.log('Email skipped (not configured)');
+        res.json({ success: true, id, estimatedMonthly });
       }
     }
   );
 });
 
-// Email builders
-function buildCustomerEmail(name, sqft, duration, estimatedMonthly) {
-  const html = '<h2>Thank You for Your Inquiry</h2>' +
-    '<p>Hi ' + name + ',</p>' +
-    '<p>We received your inquiry for industrial storage space in Grove City, Ohio.</p>' +
-    '<p><strong>Your Details:</strong></p>' +
-    '<ul>' +
-    '<li>Space Needed: ' + sqft + ' sq ft</li>' +
-    '<li>Duration: ' + duration + '</li>' +
-    '<li>Estimated Monthly Cost: $' + estimatedMonthly + '</li>' +
-    '</ul>' +
-    '<p>We will be in touch shortly with availability and next steps.</p>' +
-    '<p>Best regards,<br/>Industrial Storage Team</p>';
-  return html;
-}
+// Gallery
+app.get('/api/gallery', (req, res) => {
+  if (!fs.existsSync(uploadsDir)) {
+    return res.json([]);
+  }
 
-function buildOwnerEmail(name, company, email, phone, sqft, duration, estimatedMonthly, details) {
-  const html = '<h2>New Storage Inquiry</h2>' +
-    '<p><strong>Contact:</strong> ' + name + ' (' + company + ')</p>' +
-    '<p><strong>Email:</strong> ' + email + '</p>' +
-    '<p><strong>Phone:</strong> ' + phone + '</p>' +
-    '<p><strong>Space Needed:</strong> ' + sqft + ' sq ft</p>' +
-    '<p><strong>Duration:</strong> ' + duration + '</p>' +
-    '<p><strong>Estimated Monthly:</strong> $' + estimatedMonthly + '</p>' +
-    '<p><strong>Details:</strong><br/>' + (details || 'N/A') + '</p>';
-  return html;
-}
+  try {
+    const files = fs.readdirSync(uploadsDir)
+      .filter(f => /\.(jpg|jpeg|png|gif|webp)$/i.test(f))
+      .map(f => ({
+        url: '/uploads/' + f,
+        name: f
+      }));
+    res.json(files);
+  } catch (e) {
+    res.json([]);
+  }
+});
 
-// API: Get all inquiries (for dashboard)
+// Upload photo
+app.post('/api/upload-photo', (req, res) => {
+  const base64Data = req.body.photoData;
+  if (!base64Data) {
+    return res.status(400).json({ error: 'No image data' });
+  }
+
+  try {
+    const matches = base64Data.match(/^data:image\/([a-zA-Z0-9]*);base64,(.+)$/);
+    if (!matches) {
+      return res.status(400).json({ error: 'Invalid image format' });
+    }
+
+    const ext = matches[1] || 'jpg';
+    const data = Buffer.from(matches[2], 'base64');
+    const filename = 'photo-' + Date.now() + '.' + ext;
+    const filepath = path.join(uploadsDir, filename);
+
+    fs.writeFileSync(filepath, data);
+
+    res.json({
+      success: true,
+      url: '/uploads/' + filename
+    });
+  } catch (e) {
+    res.status(500).json({ error: 'Upload failed: ' + e.message });
+  }
+});
+
+// Get inquiries (admin)
 app.get('/api/inquiries', (req, res) => {
   const token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null;
   if (token !== process.env.API_TOKEN) {
@@ -148,32 +157,10 @@ app.get('/api/inquiries', (req, res) => {
 
   db.all('SELECT * FROM inquiries ORDER BY created_at DESC', (err, rows) => {
     if (err) {
-      return res.status(500).json({ error: 'Failed to fetch inquiries' });
+      return res.status(500).json({ error: 'Failed to fetch' });
     }
-    res.json(rows);
+    res.json(rows || []);
   });
-});
-
-// API: Update inquiry status
-app.patch('/api/inquiries/:id', (req, res) => {
-  const token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null;
-  if (token !== process.env.API_TOKEN) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-
-  const { id } = req.params;
-  const { status } = req.body;
-
-  db.run(
-    'UPDATE inquiries SET status = ? WHERE id = ?',
-    [status, id],
-    function(err) {
-      if (err) {
-        return res.status(500).json({ error: 'Failed to update inquiry' });
-      }
-      res.json({ success: true });
-    }
-  );
 });
 
 // Health check
@@ -181,21 +168,11 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// ─── START ────────────────────────────────────────────────────────────────────
-
+// START
 app.listen(PORT, () => {
   console.log('');
-  console.log('🏭 ════════════════════════════════════════════════════════════════════');
-  console.log('   INDUSTRIAL STORAGE WEBSITE');
-  console.log('   Grove City, Ohio | 50,000 sq ft | Short-Term Leasing');
-  console.log('🏭 ════════════════════════════════════════════════════════════════════');
-  console.log('');
-  console.log('   Website:   http://localhost:' + PORT);
-  console.log('   Inquiries: POST http://localhost:' + PORT + '/api/inquiries');
-  console.log('   Health:    http://localhost:' + PORT + '/api/health');
-  console.log('');
-  console.log('   Database:  SQLite (inquiries.db)');
-  console.log('   Email:     ' + (process.env.EMAIL_USER ? 'configured' : 'NOT configured'));
+  console.log('🏭 Industrial Storage Website');
+  console.log('http://localhost:' + PORT);
   console.log('');
 });
 
