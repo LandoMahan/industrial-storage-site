@@ -129,8 +129,8 @@
       <h3>Calculate Your Cost</h3>
       <div class="calculator-form">
         <label>How much space do you need?</label>
-        <input type="number" id="sqftInput" placeholder="e.g., 10000" min="0" max="50000">
-        <p>Your estimated monthly cost: <strong id="estimatedCost">Enter square footage</strong></p>
+        <input type="number" id="sqftInput" placeholder="e.g., 10000" min="0" max="50000" value="">
+        <p>Your estimated monthly cost: <strong id="estimatedCost">$0.00 per month</strong></p>
         <p style="font-size: 0.85rem; color: #999; margin-top: 10px;">*Based on $1.20/sqft/month. Larger leases or longer terms may qualify for better rates.</p>
       </div>
     </div>
@@ -192,17 +192,25 @@
     <h2>Space Gallery</h2>
     <p style="text-align: center; color: #666; margin-bottom: 30px;">Photos of the second-floor storage space</p>
     <div class="gallery-grid">
-      <div class="gallery-item">
-        <img src="placeholder-1.jpg" alt="Industrial storage space - overview">
+      <div class="gallery-item" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: white; font-size: 1.2rem; text-align: center;">
+          Photo 1: Overview
+        </div>
       </div>
-      <div class="gallery-item">
-        <img src="placeholder-2.jpg" alt="Loading area and elevator access">
+      <div class="gallery-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: white; font-size: 1.2rem; text-align: center;">
+          Photo 2: Loading Area
+        </div>
       </div>
-      <div class="gallery-item">
-        <img src="placeholder-3.jpg" alt="Ceiling height and vertical space">
+      <div class="gallery-item" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: white; font-size: 1.2rem; text-align: center;">
+          Photo 3: Ceiling Height
+        </div>
       </div>
-      <div class="gallery-item">
-        <img src="placeholder-4.jpg" alt="Equipment storage example">
+      <div class="gallery-item" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: white; font-size: 1.2rem; text-align: center;">
+          Photo 4: Equipment Storage
+        </div>
       </div>
     </div>
   </div>
