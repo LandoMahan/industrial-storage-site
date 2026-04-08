@@ -16,11 +16,59 @@
   --border: #e0e0e0;
 }
 
+@media (min-width: 1025px) {
+  .nav-menu {
+    display: flex !important;
+    gap: 20px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .nav-menu a {
+    font-size: 0.9rem;
+  }
+
+  .header {
+    padding: 15px 0;
+  }
+
+  .header-content {
+    gap: 30px;
+  }
+
+  .logo {
+    gap: 10px;
+    min-width: 130px;
+  }
+
+  .logo-icon {
+    font-size: 1.8rem;
+  }
+
+  .logo-main {
+    font-size: 0.85rem;
+  }
+
+  .logo-sub {
+    font-size: 0.7rem;
+  }
+
+  .contact-button {
+    padding: 10px 25px;
+    font-size: 0.8rem;
+  }
+
+  .top-bar {
+    display: block;
+  }
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
   color: var(--text);
   background: var(--white);
+  font-size: 14px;
 }
 
 .container {
@@ -33,7 +81,7 @@ body {
 .top-bar {
   background: var(--dark-gray);
   color: var(--white);
-  padding: 12px 0;
+  padding: 10px 0;
   font-size: 0.9rem;
 }
 
@@ -41,11 +89,18 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.top-bar-left {
+  flex: 1;
+  min-width: 200px;
 }
 
 .top-bar-right {
   display: flex;
-  gap: 20px;
+  gap: 15px;
   align-items: center;
 }
 
@@ -56,7 +111,7 @@ body {
 /* HEADER */
 .header {
   background: var(--white);
-  padding: 20px 0;
+  padding: 10px 0;
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
@@ -68,52 +123,51 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 40px;
+  gap: 12px;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   flex-shrink: 0;
+  min-width: 100px;
 }
 
 .logo-icon {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .logo-text {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0px;
+  line-height: 1.1;
 }
 
 .logo-main {
   font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 1px;
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
   color: var(--dark-gray);
 }
 
 .logo-sub {
   font-weight: 700;
-  font-size: 0.8rem;
-  letter-spacing: 1px;
+  font-size: 0.6rem;
+  letter-spacing: 0.5px;
   color: var(--primary-blue);
 }
 
 .nav-menu {
-  display: flex;
-  gap: 30px;
-  flex: 1;
-  justify-content: center;
+  display: none;
 }
 
 .nav-menu a {
   text-decoration: none;
   color: var(--text);
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   transition: color 0.3s;
 }
 
@@ -124,13 +178,14 @@ body {
 .contact-button {
   background: var(--primary-blue);
   color: var(--white);
-  padding: 12px 30px;
+  padding: 8px 16px;
   border-radius: 6px;
   text-decoration: none;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   white-space: nowrap;
   transition: background 0.3s;
+  flex-shrink: 0;
 }
 
 .contact-button:hover {
