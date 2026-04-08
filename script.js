@@ -4,12 +4,11 @@
 document.getElementById('sqftInput')?.addEventListener('input', function() {
   const sqft = parseFloat(this.value) || 0;
   if (sqft > 0) {
-    // TODO: Replace with actual pricing logic
-    const monthlyRate = 1.50; // Example: $1.50 per sqft per month
+    const monthlyRate = 1.20;
     const estimated = (sqft * monthlyRate).toFixed(2);
-    document.getElementById('estimatedCost').textContent = `$${estimated} / month`;
+    document.getElementById('estimatedCost').textContent = `$${estimated} per month`;
   } else {
-    document.getElementById('estimatedCost').textContent = 'Contact us for pricing';
+    document.getElementById('estimatedCost').textContent = 'Enter square footage';
   }
 });
 

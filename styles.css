@@ -209,6 +209,42 @@ section h2 {
   font-size: 0.9rem;
 }
 
+.spec-highlights {
+  margin-top: 50px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 8px;
+  border-left: 4px solid var(--secondary);
+}
+
+.spec-highlights h3 {
+  color: var(--accent);
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+.spec-highlights ul {
+  list-style: none;
+  padding: 0;
+}
+
+.spec-highlights li {
+  padding: 10px 0;
+  padding-left: 25px;
+  position: relative;
+  color: #666;
+  line-height: 1.6;
+}
+
+.spec-highlights li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--secondary);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
 /* ─── PRICING ────────────────────────────────────────────────────────────────── */
 
 .pricing {
@@ -302,6 +338,46 @@ section h2 {
   font-size: 1.1rem;
   color: var(--accent);
   margin-top: 15px;
+}
+
+/* ─── DIFFERENCE / COMPARISON ───────────────────────────────────────────────────── */
+
+.difference {
+  background-color: white;
+}
+
+.comparison-table {
+  overflow-x: auto;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.comparison-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.comparison-table th {
+  background-color: var(--accent);
+  color: white;
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 3px solid var(--secondary);
+}
+
+.comparison-table td {
+  padding: 15px;
+  border-bottom: 1px solid var(--border);
+}
+
+.comparison-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.comparison-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
 }
 
 /* ─── GALLERY ────────────────────────────────────────────────────────────────── */
