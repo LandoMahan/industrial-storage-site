@@ -997,4 +997,8 @@ body {
   .header {
     display: none !important;
   }
+
+  .space-options {
+    display: none !important;
+  }
 }
