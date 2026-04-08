@@ -6,7 +6,7 @@ document.getElementById('sqftInput')?.addEventListener('input', function() {
   if (sqft > 0) {
     const monthlyRate = 1.20;
     const estimated = (sqft * monthlyRate).toFixed(2);
-    document.getElementById('estimatedCost').textContent = `$${estimated} per month`;
+    document.getElementById('estimatedCost').textContent = '$' + estimated + ' per month';
   } else {
     document.getElementById('estimatedCost').textContent = 'Enter square footage';
   }
@@ -23,15 +23,28 @@ document.getElementById('inquiryForm')?.addEventListener('submit', async functio
     phone: document.getElementById('phone').value,
     sqft: document.getElementById('sqft').value,
     duration: document.getElementById('duration').value,
-    details: document.getElementById('details').value,
-    timestamp: new Date().toISOString()
+    details: document.getElementById('details').value
   };
 
-  console.log('Inquiry submitted:', formData);
-  
-  // TODO: Send to backend or email service
-  alert('Thank you for your inquiry! We will contact you shortly.');
-  this.reset();
+  try {
+    const response = await fetch('/api/inquiries', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      alert('Thank you for your inquiry! We will contact you shortly.');
+      document.getElementById('inquiryForm').reset();
+      document.getElementById('estimatedCost').textContent = 'Enter square footage';
+    } else {
+      alert('Error: ' + (result.error || 'Failed to submit inquiry'));
+    }
+  } catch (error) {
+    console.error('Submission error:', error);
+    alert('Error submitting inquiry. Please try again.');
+  }
 });
 
 // Smooth Scrolling for Nav Links
