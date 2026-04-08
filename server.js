@@ -62,7 +62,45 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Submit inquiry
+// Submit inquiry (both /api/inquiry and /api/inquiries work)
+app.post('/api/inquiry', async (req, res) => {
+  const { name, company, email, phone, sqft, details } = req.body;
+
+  if (!name || !company || !email || !phone || !sqft) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  const id = uuidv4();
+  const estimatedMonthly = (parseFloat(sqft) * 1.20).toFixed(2);
+
+  db.run(
+    'INSERT INTO inquiries (id, name, company, email, phone, sqft, duration, details) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+    [id, name, company, email, phone, sqft, 'flexible', details],
+    async (err) => {
+      if (err) {
+        console.error('Database error:', err);
+        return res.status(500).json({ error: 'Failed to save inquiry' });
+      }
+
+      try {
+        await transporter.sendMail({
+          from: process.env.EMAIL_USER,
+          to: email,
+          subject: 'Industrial Storage Inquiry Received',
+          html: `<h2>Thank you for your inquiry!</h2><p>We received your request for ${sqft} sq ft of industrial storage space. Our team will contact you within 24 business hours at ${phone}.</p>`
+        });
+
+        console.log('✓ Inquiry saved:', id);
+        res.json({ success: true, id, estimatedMonthly });
+      } catch (e) {
+        console.log('Email skipped (not configured)');
+        res.json({ success: true, id, estimatedMonthly });
+      }
+    }
+  );
+});
+
+// Legacy endpoint
 app.post('/api/inquiries', async (req, res) => {
   const { name, company, email, phone, sqft, duration, details } = req.body;
 
@@ -100,7 +138,7 @@ app.post('/api/inquiries', async (req, res) => {
   );
 });
 
-// Gallery
+// Gallery photos
 app.get('/api/gallery', (req, res) => {
   if (!fs.existsSync(uploadsDir)) {
     return res.json([]);
