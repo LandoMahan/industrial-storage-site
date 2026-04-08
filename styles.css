@@ -813,3 +813,130 @@ body {
     flex-direction: column;
   }
 }
+/* MOBILE FIX - Append to styles.css */
+
+@media (max-width: 1024px) {
+  .space-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .logo {
+    gap: 6px;
+  }
+
+  .logo-icon {
+    font-size: 1.5rem;
+  }
+
+  .logo-main, .logo-sub {
+    font-size: 0.7rem;
+  }
+
+  .nav-menu {
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 0.75rem;
+  }
+
+  .contact-button {
+    padding: 8px 16px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+  }
+
+  .hero { padding: 40px 0; }
+  .hero-content { grid-template-columns: 1fr; gap: 20px; }
+  .hero h1 { font-size: 1.5rem; line-height: 1.2; }
+  .hero-buttons { flex-direction: column; gap: 8px; }
+  .btn-primary, .btn-secondary { padding: 10px 20px; font-size: 0.85rem; }
+
+  .why-us-grid { grid-template-columns: 1fr; }
+  .space-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .space-item { padding: 25px 15px; }
+  .space-illustration { font-size: 3rem; }
+  .spec-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .pricing-content { grid-template-columns: 1fr; gap: 30px; }
+  .pricing-examples { grid-template-columns: 1fr; }
+  .faq-grid { grid-template-columns: 1fr; }
+
+  .gallery-item img { height: 180px; }
+  .inquiry-form { padding: 20px; }
+  .form-row { grid-template-columns: 1fr; }
+
+  .top-bar { font-size: 0.75rem; padding: 8px 0; }
+  .top-bar-content { flex-direction: column; gap: 5px; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 10px; }
+
+  .header-content { gap: 8px; }
+  .logo-icon { font-size: 1.2rem; }
+  .logo-main { font-size: 0.65rem; }
+  .logo-sub { font-size: 0.55rem; }
+  .nav-menu { gap: 6px; font-size: 0.65rem; }
+  .contact-button { padding: 6px 10px; font-size: 0.6rem; }
+
+  .hero { padding: 25px 0; }
+  .hero h1 { font-size: 1.2rem; margin-bottom: 12px; }
+  .hero-tagline { font-size: 0.7rem; }
+  .hero-description { font-size: 0.8rem; line-height: 1.5; }
+  .hero-buttons { gap: 6px; }
+  .btn-primary, .btn-secondary { padding: 8px 16px; font-size: 0.75rem; }
+
+  .why-us { padding: 30px 0; }
+  .why-us h2 { font-size: 1.2rem; margin-bottom: 20px; }
+  .why-us-item { padding: 15px; }
+  .why-us-item h3 { font-size: 0.85rem; }
+  .why-us-item p { font-size: 0.75rem; }
+
+  .space-options { padding: 30px 0; }
+  .space-options h2 { font-size: 1.2rem; }
+  .space-intro { font-size: 0.75rem; margin-bottom: 20px; }
+  .space-grid { grid-template-columns: 1fr; gap: 15px; }
+  .space-item { padding: 18px 12px; }
+  .space-illustration { font-size: 2.2rem; }
+  .space-badge { font-size: 0.65rem; padding: 5px 10px; }
+  .space-size { font-size: 0.75rem; }
+
+  .specs-grid { grid-template-columns: 1fr; }
+  .spec-item { padding: 15px 10px; }
+  .spec-number { font-size: 1.3rem; }
+
+  .pricing h2, .faq h2, .gallery h2, .contact h2 { font-size: 1.2rem; margin-bottom: 20px; }
+  .pricing-content { gap: 20px; }
+  .rate { font-size: 1.5rem; }
+  .pricing-examples { gap: 10px; }
+  .example { padding: 10px; font-size: 0.75rem; }
+
+  .faq-grid { gap: 12px; }
+  .faq-item { padding: 12px; }
+  .faq-item h3 { font-size: 0.8rem; }
+  .faq-item p { font-size: 0.75rem; }
+
+  .gallery-item img { height: 120px; }
+
+  .inquiry-form { padding: 15px; }
+  .form-group label { font-size: 0.8rem; }
+  .form-group input, .form-group select, .form-group textarea { 
+    padding: 8px; 
+    font-size: 16px;
+    border-radius: 4px;
+  }
+  .submit-btn { padding: 10px; font-size: 0.8rem; }
+
+  input, select, textarea { font-size: 16px !important; }
+}
