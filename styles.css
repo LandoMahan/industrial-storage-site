@@ -121,7 +121,7 @@ a:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(26, 26, 26, 0.7), rgba(0, 99, 153, 0.5));
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.4), rgba(0, 99, 153, 0.3));
   z-index: -1;
 }
 
@@ -148,17 +148,19 @@ a:hover {
   line-height: 1.1;
   margin-bottom: 25px;
   letter-spacing: -1px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .hero-text .highlight {
-  color: var(--primary);
+  color: #ffdb58;
 }
 
 .hero-subtitle {
   font-size: 1.25rem;
   margin-bottom: 40px;
-  opacity: 0.95;
+  opacity: 1;
   line-height: 1.6;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .hero-ctas {
@@ -168,13 +170,29 @@ a:hover {
   flex-wrap: wrap;
 }
 
+.hero-ctas .btn-primary {
+  background: var(--primary);
+  box-shadow: 0 4px 12px rgba(0, 153, 204, 0.4);
+}
+
+.hero-ctas .btn-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.8);
+  color: var(--white);
+  backdrop-filter: blur(10px);
+}
+
+.hero-ctas .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   margin-top: 40px;
   padding-top: 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .stat {
@@ -184,15 +202,17 @@ a:hover {
 .stat-number {
   font-size: 2rem;
   font-weight: 900;
-  color: var(--primary);
+  color: #ffdb58;
   display: block;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .stat-label {
   font-size: 0.9rem;
-  opacity: 0.85;
+  opacity: 1;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* SECTIONS */
