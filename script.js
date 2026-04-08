@@ -1,5 +1,22 @@
 // Industrial Storage — JavaScript
 
+// Set pano photo as hero background
+async function setHeroBanner() {
+  try {
+    const response = await fetch('/api/gallery');
+    const photos = await response.json();
+    if (photos && photos.length > 0) {
+      const heroBg = document.querySelector('.hero-bg');
+      if (heroBg) {
+        const lastPhoto = photos[photos.length - 1];
+        heroBg.style.backgroundImage = 'url(' + lastPhoto.url + ')';
+      }
+    }
+  } catch (e) {
+    console.log('Hero background skipped');
+  }
+}
+
 // Pricing Calculator
 document.getElementById('sqftCalc')?.addEventListener('input', function() {
   const sqft = parseFloat(this.value) || 0;
@@ -80,6 +97,7 @@ function uploadPhoto(file) {
         statusEl.textContent = '✓ Photo uploaded!';
         document.getElementById('photoInput').value = '';
         setTimeout(() => {
+          setHeroBanner();
           loadGallery();
           statusEl.textContent = '';
           dropZone.style.opacity = '1';
@@ -95,38 +113,6 @@ function uploadPhoto(file) {
     }
   };
   reader.readAsDataURL(file);
-}
-
-// Drag and Drop
-const dropZone = document.getElementById('dropZone');
-if (dropZone) {
-  dropZone.addEventListener('click', () => {
-    document.getElementById('photoInput').click();
-  });
-
-  dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropZone.classList.add('drag-over');
-  });
-
-  dropZone.addEventListener('dragleave', () => {
-    dropZone.classList.remove('drag-over');
-  });
-
-  dropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.classList.remove('drag-over');
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      uploadPhoto(files[0]);
-    }
-  });
-
-  document.getElementById('photoInput').addEventListener('change', function() {
-    if (this.files.length > 0) {
-      uploadPhoto(this.files[0]);
-    }
-  });
 }
 
 // Gallery Loading
@@ -150,6 +136,40 @@ async function loadGallery() {
   }
 }
 
+// Drag and Drop
+const dropZone = document.getElementById('dropZone');
+if (dropZone) {
+  dropZone.addEventListener('click', (e) => {
+    document.getElementById('photoInput').click();
+  });
+
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.classList.add('drag-over');
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('drag-over');
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.classList.remove('drag-over');
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      uploadPhoto(files[0]);
+    }
+  });
+
+  document.getElementById('photoInput').addEventListener('change', function() {
+    if (this.files.length > 0) {
+      uploadPhoto(this.files[0]);
+    }
+  });
+}
+
 // Smooth Scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
@@ -163,6 +183,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
+  setHeroBanner();
   loadGallery();
 });
 
