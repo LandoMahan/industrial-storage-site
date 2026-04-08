@@ -43,7 +43,36 @@ document.getElementById('inquiryForm')?.addEventListener('submit', async functio
   }
 });
 
+// Load Gallery
+async function loadGallery() {
+  try {
+    const response = await fetch('/api/gallery');
+    const photos = await response.json();
+    const gallery = document.getElementById('galleryGrid');
+    
+    if (!photos || photos.length === 0) {
+      gallery.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Gallery loading...</p>';
+      return;
+    }
+    
+    gallery.innerHTML = photos.map(photo => `
+      <div class="gallery-item">
+        <img src="${photo.url}" alt="Facility photo" loading="lazy">
+      </div>
+    `).join('');
+  } catch (error) {
+    console.log('Gallery load skipped');
+  }
+}
+
+// Load gallery on page load
+window.addEventListener('load', loadGallery);
+
 // Smooth Scrolling
+if (document.getElementById('galleryGrid')) {
+  loadGallery();
+}
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
