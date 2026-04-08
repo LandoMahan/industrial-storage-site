@@ -2,102 +2,55 @@
   <defs>
     <linearGradient id="metalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" style="stop-color:#003d66;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#0099cc;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#004080;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099cc;stop-opacity:1" />
     </linearGradient>
-    <pattern id="steelPattern" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
-      <rect x="0" y="0" width="4" height="4" fill="#0099cc" opacity="0.1"/>
-    </pattern>
   </defs>
   
-  <!-- Heavy steel base/foundation -->
-  <rect x="20" y="158" width="160" height="12" fill="#0099cc" rx="2"/>
-  <rect x="20" y="150" width="160" height="6" fill="#003d66" rx="2"/>
-  <rect x="20" y="145" width="160" height="3" fill="#ffdb58" rx="1"/>
+  <!-- Heavy base foundation -->
+  <rect x="15" y="160" width="170" height="15" fill="#0099cc" rx="2"/>
+  <rect x="15" y="150" width="170" height="8" fill="#003d66"/>
+  <rect x="15" y="145" width="170" height="4" fill="#ffdb58"/>
   
-  <!-- Structural steel support columns -->
-  <g stroke="#003d66" stroke-width="3" fill="none">
-    <line x1="45" y1="50" x2="45" y2="158" opacity="0.7"/>
-    <line x1="155" y1="50" x2="155" y2="158" opacity="0.7"/>
+  <!-- Main warehouse structure -->
+  <rect x="15" y="45" width="170" height="110" fill="none" stroke="#0099cc" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Roof - simple triangle -->
+  <polygon points="15,45 100,8 185,45" fill="none" stroke="#0099cc" stroke-width="6" stroke-linejoin="round"/>
+  
+  <!-- Gold roof line accent -->
+  <line x1="15" y1="45" x2="185" y2="45" stroke="#ffdb58" stroke-width="5" stroke-linecap="round"/>
+  
+  <!-- Simple large twin doors -->
+  <g stroke="#0099cc" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="25" y="70" width="70" height="75" rx="3"/>
+    <rect x="105" y="70" width="70" height="75" rx="3"/>
+    <line x1="100" y1="70" x2="100" y2="145" stroke-width="5"/>
   </g>
   
-  <!-- Main warehouse box - extra bold -->
-  <rect x="20" y="50" width="160" height="100" fill="url(#steelPattern)" stroke="url(#metalGradient)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Big gold door handles -->
+  <circle cx="60" cy="107" r="5" fill="#ffdb58"/>
+  <circle cx="140" cy="107" r="5" fill="#ffdb58"/>
   
-  <!-- Roof - aggressive angle -->
-  <polygon points="20,50 100,12 180,50" fill="none" stroke="url(#metalGradient)" stroke-width="5" stroke-linejoin="round"/>
-  
-  <!-- Roof top ridge beam (steel I-beam look) -->
-  <rect x="95" y="8" width="10" height="45" fill="#003d66" opacity="0.6"/>
-  
-  <!-- Heavy roof line accent in gold -->
-  <line x1="20" y1="50" x2="180" y2="50" stroke="#ffdb58" stroke-width="4" stroke-linecap="round"/>
-  
-  <!-- Massive dual industrial loading doors -->
-  <g stroke="url(#metalGradient)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Left door -->
-    <rect x="30" y="75" width="60" height="65" rx="3"/>
-    <!-- Right door -->
-    <rect x="110" y="75" width="60" height="65" rx="3"/>
-    <!-- Center divider -->
-    <line x1="100" y1="75" x2="100" y2="140" stroke-width="4"/>
-  </g>
-  
-  <!-- Heavy-duty door frame reinforcement -->
-  <g stroke="#ffdb58" stroke-width="2.5" fill="none">
-    <!-- Top reinforcement bar -->
-    <line x1="30" y1="73" x2="170" y2="73" stroke-width="3" opacity="0.8"/>
-    <!-- Bottom reinforcement bar -->
-    <line x1="30" y1="143" x2="170" y2="143" stroke-width="3" opacity="0.8"/>
-  </g>
-  
-  <!-- Industrial safety handles - heavy bolts -->
-  <g fill="#ffdb58" opacity="0.95">
-    <circle cx="60" cy="110" r="3.5"/>
-    <circle cx="140" cy="110" r="3.5"/>
-    <!-- Bolt details -->
-    <circle cx="60" cy="110" r="2" fill="none" stroke="#0099cc" stroke-width="1.5" opacity="0.6"/>
-    <circle cx="140" cy="110" r="2" fill="none" stroke="#0099cc" stroke-width="1.5" opacity="0.6"/>
-  </g>
-  
-  <!-- Security window grilles (heavy duty) -->
-  <g stroke="#0099cc" stroke-width="2" fill="none">
-    <!-- Top left security window -->
-    <rect x="25" y="55" width="22" height="18" rx="1.5" stroke-width="2.5"/>
-    <line x1="36" y1="55" x2="36" y2="73" stroke-width="1.5"/>
-    <line x1="25" y1="64" x2="47" y2="64" stroke-width="1.5"/>
-    <line x1="25" y1="55" x2="47" y2="55" stroke-width="1.5" opacity="0.5"/>
+  <!-- Simple security windows - large and clear -->
+  <g stroke="#0099cc" stroke-width="3" fill="none" stroke-linecap="round">
+    <rect x="20" y="50" width="30" height="25" rx="2"/>
+    <line x1="35" y1="50" x2="35" y2="75"/>
+    <line x1="20" y1="62" x2="50" y2="62"/>
     
-    <!-- Top right security window -->
-    <rect x="153" y="55" width="22" height="18" rx="1.5" stroke-width="2.5"/>
-    <line x1="164" y1="55" x2="164" y2="73" stroke-width="1.5"/>
-    <line x1="153" y1="64" x2="175" y2="64" stroke-width="1.5"/>
-    <line x1="153" y1="55" x2="175" y2="55" stroke-width="1.5" opacity="0.5"/>
+    <rect x="150" y="50" width="30" height="25" rx="2"/>
+    <line x1="165" y1="50" x2="165" y2="75"/>
+    <line x1="150" y1="62" x2="180" y2="62"/>
   </g>
   
-  <!-- Industrial corner braces - tough look -->
-  <g stroke="#ffdb58" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Top left corner brace -->
-    <line x1="20" y1="50" x2="38" y2="50"/>
-    <line x1="20" y1="50" x2="20" y2="68"/>
-    <!-- Top right corner brace -->
-    <line x1="180" y1="50" x2="162" y2="50"/>
-    <line x1="180" y1="50" x2="180" y2="68"/>
+  <!-- Corner braces - bold gold -->
+  <g stroke="#ffdb58" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="15" y1="45" x2="40" y2="45"/>
+    <line x1="15" y1="45" x2="15" y2="70"/>
+    
+    <line x1="185" y1="45" x2="160" y2="45"/>
+    <line x1="185" y1="45" x2="185" y2="70"/>
   </g>
   
-  <!-- Side reinforcement straps -->
-  <g stroke="#0099cc" stroke-width="2.5" fill="none" opacity="0.5">
-    <line x1="50" y1="50" x2="50" y2="145" stroke-dasharray="8,4"/>
-    <line x1="150" y1="50" x2="150" y2="145" stroke-dasharray="8,4"/>
-  </g>
-  
-  <!-- Heavy shadow/depth accent -->
-  <rect x="21" y="50" width="158" height="4" fill="#000" opacity="0.2" rx="1"/>
-  
-  <!-- Gold peak accent (top of roof) -->
-  <polygon points="100,12 97,25 103,25" fill="#ffdb58" opacity="1"/>
-  <polygon points="100,12 99,18 101,18" fill="#ffdb58" opacity="0.6"/>
-  
-  <!-- Steel shine (industrial polish) -->
-  <line x1="25" y1="60" x2="175" y2="60" stroke="#ffffff" stroke-width="1.5" opacity="0.35" stroke-linecap="round"/>
+  <!-- Gold peak at roof top -->
+  <polygon points="100,8 96,22 104,22" fill="#ffdb58"/>
 </svg>
