@@ -1,38 +1,75 @@
 <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-  <!-- Warehouse Building Icon -->
   <defs>
-    <linearGradient id="warehouseGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+    <linearGradient id="steelGradient" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" style="stop-color:#0099cc;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#0077aa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#005580;stop-opacity:1" />
     </linearGradient>
   </defs>
   
-  <!-- Main warehouse structure -->
-  <rect x="30" y="60" width="140" height="95" fill="none" stroke="url(#warehouseGradient)" stroke-width="3" rx="2"/>
+  <!-- Heavy industrial base/foundation -->
+  <rect x="25" y="155" width="150" height="8" fill="#0099cc" rx="1"/>
+  <rect x="25" y="150" width="150" height="4" fill="#005580" rx="1"/>
   
-  <!-- Roof -->
-  <polygon points="30,60 100,20 170,60" fill="none" stroke="url(#warehouseGradient)" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Main warehouse structure - bold and heavy -->
+  <rect x="25" y="50" width="150" height="105" fill="none" stroke="#0099cc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
   
-  <!-- Large loading door -->
-  <rect x="50" y="85" width="100" height="70" fill="none" stroke="#0099cc" stroke-width="2.5"/>
+  <!-- Roof - sharp industrial style -->
+  <polygon points="25,50 100,15 175,50" fill="none" stroke="#0099cc" stroke-width="4" stroke-linejoin="round"/>
   
-  <!-- Door divide line -->
-  <line x1="100" y1="85" x2="100" y2="155" stroke="#0099cc" stroke-width="2"/>
+  <!-- Roof ridge accent line - gold -->
+  <line x1="25" y1="50" x2="175" y2="50" stroke="#ffdb58" stroke-width="3"/>
   
-  <!-- Door handles -->
-  <circle cx="75" cy="120" r="3" fill="#0099cc"/>
-  <circle cx="125" cy="120" r="3" fill="#0099cc"/>
+  <!-- Large industrial loading doors (twin doors) -->
+  <g stroke="#0099cc" stroke-width="3" fill="none">
+    <!-- Left door -->
+    <rect x="35" y="75" width="55" height="70" rx="2" stroke-linecap="round"/>
+    <!-- Right door -->
+    <rect x="110" y="75" width="55" height="70" rx="2" stroke-linecap="round"/>
+    <!-- Vertical divider -->
+    <line x1="92.5" y1="75" x2="92.5" y2="145" stroke-width="3"/>
+  </g>
   
-  <!-- Small windows -->
-  <rect x="35" y="65" width="15" height="12" fill="none" stroke="#0099cc" stroke-width="1.5" rx="1"/>
-  <rect x="150" y="65" width="15" height="12" fill="none" stroke="#0099cc" stroke-width="1.5" rx="1"/>
+  <!-- Heavy door handles - bolts style -->
+  <g fill="#ffdb58" opacity="0.9">
+    <circle cx="55" cy="110" r="2.5"/>
+    <circle cx="130" cy="110" r="2.5"/>
+  </g>
   
-  <!-- Roofline accent (gold) -->
-  <line x1="30" y1="60" x2="170" y2="60" stroke="#ffdb58" stroke-width="2" opacity="0.8"/>
+  <!-- Industrial window pattern - security style -->
+  <g stroke="#0099cc" stroke-width="1.5" fill="none">
+    <!-- Top left window -->
+    <rect x="30" y="55" width="18" height="14" rx="1"/>
+    <line x1="39" y1="55" x2="39" y2="69"/>
+    <line x1="30" y1="61" x2="48" y2="61"/>
+    <!-- Top right window -->
+    <rect x="152" y="55" width="18" height="14" rx="1"/>
+    <line x1="161" y1="55" x2="161" y2="69"/>
+    <line x1="152" y1="61" x2="170" y2="61"/>
+  </g>
   
-  <!-- Foundation line -->
-  <line x1="30" y1="155" x2="170" y2="155" stroke="#0099cc" stroke-width="2"/>
+  <!-- Reinforcement straps - heavy industrial look -->
+  <g stroke="#0099cc" stroke-width="2" fill="none">
+    <!-- Vertical reinforcement -->
+    <line x1="50" y1="50" x2="50" y2="145" opacity="0.6"/>
+    <line x1="150" y1="50" x2="150" y2="145" opacity="0.6"/>
+  </g>
   
-  <!-- Accent geometric shape (represents structure/growth) -->
-  <polygon points="100,30 105,40 95,40" fill="#ffdb58" opacity="0.9"/>
+  <!-- Industrial corner brackets (tough look) -->
+  <g stroke="#ffdb58" stroke-width="2.5" fill="none" stroke-linecap="round">
+    <!-- Top left bracket -->
+    <line x1="25" y1="50" x2="40" y2="50"/>
+    <line x1="25" y1="50" x2="25" y2="65"/>
+    <!-- Top right bracket -->
+    <line x1="175" y1="50" x2="160" y2="50"/>
+    <line x1="175" y1="50" x2="175" y2="65"/>
+  </g>
+  
+  <!-- Heavy shadow accent (depth) -->
+  <rect x="26" y="50" width="148" height="3" fill="#000" opacity="0.15" rx="1"/>
+  
+  <!-- Accent peak (represents strength/peak performance) -->
+  <polygon points="100,15 98,25 102,25" fill="#ffdb58" opacity="0.95"/>
+  
+  <!-- Steel shine accent (professional industrial) -->
+  <line x1="30" y1="55" x2="170" y2="55" stroke="#ffffff" stroke-width="1" opacity="0.4"/>
 </svg>
