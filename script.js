@@ -44,14 +44,17 @@ document.getElementById('inquiryForm')?.addEventListener('submit', async functio
 });
 
 // Photo Upload Handler
-document.getElementById('photoUploadForm')?.addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const fileInput = document.getElementById('photoInput');
-  const file = fileInput.files[0];
+function uploadPhoto(file) {
   const statusEl = document.getElementById('uploadStatus');
+  const dropZone = document.getElementById('dropZone');
 
   if (!file) {
     statusEl.textContent = 'Please select a photo';
+    return;
+  }
+
+  if (!file.type.startsWith('image/')) {
+    statusEl.textContent = 'Please select an image file';
     return;
   }
 
@@ -61,6 +64,7 @@ document.getElementById('photoUploadForm')?.addEventListener('submit', async fun
   }
 
   statusEl.textContent = 'Uploading...';
+  dropZone.style.opacity = '0.5';
 
   const reader = new FileReader();
   reader.onload = async function(event) {
@@ -73,22 +77,57 @@ document.getElementById('photoUploadForm')?.addEventListener('submit', async fun
 
       const result = await response.json();
       if (result.success) {
-        statusEl.textContent = '✓ Photo uploaded! Refreshing gallery...';
-        fileInput.value = '';
+        statusEl.textContent = '✓ Photo uploaded!';
+        document.getElementById('photoInput').value = '';
         setTimeout(() => {
           loadGallery();
           statusEl.textContent = '';
-        }, 1500);
+          dropZone.style.opacity = '1';
+        }, 1000);
       } else {
-        statusEl.textContent = '✗ Upload failed: ' + (result.error || 'Unknown error');
+        statusEl.textContent = '✗ ' + (result.error || 'Upload failed');
+        dropZone.style.opacity = '1';
       }
     } catch (error) {
-      statusEl.textContent = '✗ Error uploading photo';
+      statusEl.textContent = '✗ Error uploading';
+      dropZone.style.opacity = '1';
       console.error(error);
     }
   };
   reader.readAsDataURL(file);
-});
+}
+
+// Drag and Drop
+const dropZone = document.getElementById('dropZone');
+if (dropZone) {
+  dropZone.addEventListener('click', () => {
+    document.getElementById('photoInput').click();
+  });
+
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('drag-over');
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('drag-over');
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      uploadPhoto(files[0]);
+    }
+  });
+
+  document.getElementById('photoInput').addEventListener('change', function() {
+    if (this.files.length > 0) {
+      uploadPhoto(this.files[0]);
+    }
+  });
+}
 
 // Gallery Loading
 async function loadGallery() {
@@ -99,7 +138,7 @@ async function loadGallery() {
     const gallery = document.getElementById('galleryGrid');
     
     if (!photos || photos.length === 0) {
-      gallery.innerHTML = '<div class="gallery-placeholder" style="grid-column: 1 / -1;"><div class="placeholder-text">No photos yet. Upload one using the form below!</div></div>';
+      gallery.innerHTML = '<div class="gallery-placeholder" style="grid-column: 1 / -1;"><div class="placeholder-text">📸 No photos yet. Upload your first one!</div></div>';
       return;
     }
 

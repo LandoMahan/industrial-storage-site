@@ -688,3 +688,50 @@ body {
     flex-direction: column;
   }
 }
+
+/* DRAG & DROP UPLOAD */
+.drop-zone {
+  border: 2px dashed var(--border);
+  border-radius: 4px;
+  padding: 60px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background-color: var(--dark);
+}
+
+.drop-zone:hover {
+  border-color: var(--accent);
+  background-color: rgba(255, 107, 53, 0.05);
+}
+
+.drop-zone.drag-over {
+  border-color: var(--accent);
+  background-color: rgba(255, 107, 53, 0.15);
+  transform: scale(1.02);
+}
+
+.drop-content {
+  pointer-events: none;
+}
+
+.drop-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.drop-zone p {
+  margin: 10px 0;
+  color: var(--text);
+}
+
+.click-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.drop-zone:hover .click-link {
+  color: var(--light);
+}

@@ -144,16 +144,16 @@
 
     <div class="gallery-upload">
       <h3>📸 Upload Photos</h3>
-      <p>Add photos to the gallery directly:</p>
-      <form id="photoUploadForm" class="photo-form" enctype="multipart/form-data">
-        <div class="file-input-wrapper">
-          <input type="file" id="photoInput" name="photo" accept="image/jpeg,image/png,image/gif,image/webp" required>
-          <label for="photoInput">Choose Photo</label>
+      <p>Drag & drop or click to add photos:</p>
+      <div id="dropZone" class="drop-zone">
+        <div class="drop-content">
+          <div class="drop-icon">📁</div>
+          <p>Drag photos here or <span class="click-link">click to browse</span></p>
+          <p style="font-size: 0.85rem; color: #999;">JPG, PNG, GIF, WebP • Max 5MB</p>
         </div>
-        <button type="submit" class="upload-button">Upload</button>
-      </form>
-      <p id="uploadStatus" style="font-size: 0.9rem; color: #ff6b35; margin-top: 15px;"></p>
-      <p style="font-size: 0.85rem; color: #999; margin-top: 15px;">Supported: JPG, PNG, GIF, WebP. Max 5MB.</p>
+        <input type="file" id="photoInput" name="photo" accept="image/jpeg,image/png,image/gif,image/webp" style="display: none;">
+      </div>
+      <p id="uploadStatus" style="font-size: 0.9rem; color: #ff6b35; margin-top: 15px; text-align: center;"></p>
     </div>
   </div>
 </section>
@@ -208,7 +208,7 @@
       </div>
       
       <button type="submit" class="submit-button">Request Space</button>
-      <p style="font-size: 0.8rem; color: #999; margin-top: 15px; text-align: center;">Your information is secure and will only be used to contact you about your storage needs.</p>
+      <p style="font-size: 0.8rem; color: #999; margin-top: 15px; text-align: center;">We will contact you within 24 hours.</p>
     </form>
 
     <div class="contact-info">
