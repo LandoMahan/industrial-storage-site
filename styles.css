@@ -135,8 +135,10 @@ body {
 }
 
 .logo-icon {
-  font-size: 2rem;
+  width: 50px;
+  height: 50px;
   color: var(--primary-blue);
+  flex-shrink: 0;
 }
 
 .logo-text {
@@ -191,50 +193,7 @@ body {
   transform: rotate(-45deg) translateY(-8px);
 }
 
-.nav-menu {
-  display: none;
-  position: absolute;
-  top: 60px;
-  left: 0;
-  right: 0;
-  background: var(--white);
-  flex-direction: column;
-  gap: 0;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--border);
-}
 
-.nav-menu.active {
-  display: flex;
-}
-
-.nav-menu a {
-  text-decoration: none;
-  color: var(--text);
-  font-weight: 500;
-  font-size: 0.9rem;
-  transition: color 0.3s;
-  padding: 12px 20px;
-  display: block;
-  border-bottom: 1px solid var(--border);
-}
-
-.nav-menu a:hover {
-  color: var(--primary-blue);
-  background: var(--light-gray);
-}
-
-.nav-menu .contact-button {
-  background: var(--primary-blue);
-  color: var(--white);
-  margin: 10px 20px 0;
-  padding: 12px 20px;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  text-align: center;
-  border: none;
-  border-bottom: 0;
-}
 
 .contact-button {
   background: var(--primary-blue);

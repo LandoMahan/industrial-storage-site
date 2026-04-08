@@ -45,20 +45,9 @@ document.getElementById('inquiryForm')?.addEventListener('submit', async functio
 
 // Hamburger Menu
 const hamburger = document.getElementById('hamburger');
-const navMenu = document.getElementById('navMenu');
-
 if (hamburger) {
   hamburger.addEventListener('click', function() {
     hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-  });
-
-  // Close menu when a link is clicked
-  navMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', function() {
-      hamburger.classList.remove('active');
-      navMenu.classList.remove('active');
-    });
   });
 }
 
@@ -70,7 +59,6 @@ async function loadGallery() {
     const gallery = document.getElementById('galleryGrid');
     
     if (!photos || photos.length === 0) {
-      gallery.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Gallery loading...</p>';
       return;
     }
     
@@ -85,9 +73,11 @@ async function loadGallery() {
 }
 
 // Load gallery on page load
-if (document.getElementById('galleryGrid')) {
-  loadGallery();
-}
+window.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('galleryGrid')) {
+    loadGallery();
+  }
+});
 
 // Smooth Scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
