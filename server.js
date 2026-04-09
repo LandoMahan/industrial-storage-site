@@ -8,6 +8,11 @@ const sqlite3 = require('sqlite3').verbose();
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 
+// B MODE INTEGRATION
+const WarehouseRouter = require('./b-mode-integration.js');
+const warehouse = new WarehouseRouter();
+console.log('🔋 B MODE ACTIVE: Warehouse project routing through ensemble + learning');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -62,7 +67,22 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Submit inquiry (both /api/inquiry and /api/inquiries work)
+// Facility Page
+app.get('/facility', (req, res) => {
+  res.sendFile(path.join(__dirname, 'facility.html'));
+});
+
+// Pricing Page
+app.get('/pricing', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pricing.html'));
+});
+
+// FAQ Page
+app.get('/faq', (req, res) => {
+  res.sendFile(path.join(__dirname, 'faq.html'));
+});
+
+// Submit inquiry (B MODE: Ensemble routing)
 app.post('/api/inquiry', async (req, res) => {
   const { name, company, email, phone, sqft, details } = req.body;
 
@@ -72,6 +92,11 @@ app.post('/api/inquiry', async (req, res) => {
 
   const id = uuidv4();
   const estimatedMonthly = (parseFloat(sqft) * 1.20).toFixed(2);
+
+  // B MODE: Process through ensemble + learning
+  const result = await warehouse.processInquiry({
+    name, company, email, phone, sqft, duration: 'flexible', details
+  });
 
   db.run(
     'INSERT INTO inquiries (id, name, company, email, phone, sqft, duration, details) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
@@ -83,24 +108,25 @@ app.post('/api/inquiry', async (req, res) => {
       }
 
       try {
+        // Send ensemble-generated response
         await transporter.sendMail({
           from: process.env.EMAIL_USER,
           to: email,
           subject: 'Industrial Storage Inquiry Received',
-          html: `<h2>Thank you for your inquiry!</h2><p>We received your request for ${sqft} sq ft of industrial storage space. Our team will contact you within 24 business hours at ${phone}.</p>`
+          html: `<h2>Thank you for your inquiry!</h2><p>${result.response}</p><p style="font-size:0.8em;color:#666;">Response confidence: ${(result.confidence * 100).toFixed(0)}%</p>`
         });
 
-        console.log('✓ Inquiry saved:', id);
-        res.json({ success: true, id, estimatedMonthly });
+        console.log(`✓ Inquiry saved: ${id} (ensemble confidence: ${(result.confidence * 100).toFixed(0)}%)`);
+        res.json({ success: true, id, estimatedMonthly, ensemble_used: result.ensemble_used });
       } catch (e) {
         console.log('Email skipped (not configured)');
-        res.json({ success: true, id, estimatedMonthly });
+        res.json({ success: true, id, estimatedMonthly, ensemble_used: result.ensemble_used });
       }
     }
   );
 });
 
-// Legacy endpoint
+// Legacy endpoint (B MODE: Ensemble routing)
 app.post('/api/inquiries', async (req, res) => {
   const { name, company, email, phone, sqft, duration, details } = req.body;
 
@@ -110,6 +136,11 @@ app.post('/api/inquiries', async (req, res) => {
 
   const id = uuidv4();
   const estimatedMonthly = (parseFloat(sqft) * 1.20).toFixed(2);
+
+  // B MODE: Process through ensemble + learning
+  const result = await warehouse.processInquiry({
+    name, company, email, phone, sqft, duration, details
+  });
 
   db.run(
     'INSERT INTO inquiries (id, name, company, email, phone, sqft, duration, details) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
@@ -121,18 +152,19 @@ app.post('/api/inquiries', async (req, res) => {
       }
 
       try {
+        // Send ensemble-generated response
         await transporter.sendMail({
           from: process.env.EMAIL_USER,
           to: email,
           subject: 'Industrial Storage Inquiry Received',
-          html: 'Thank you for your inquiry. We will contact you shortly.'
+          html: `<h2>Thank you for your inquiry!</h2><p>${result.response}</p><p style="font-size:0.8em;color:#666;">Response confidence: ${(result.confidence * 100).toFixed(0)}%</p>`
         });
 
-        console.log('✓ Inquiry saved:', id);
-        res.json({ success: true, id, estimatedMonthly });
+        console.log(`✓ Inquiry saved: ${id} (ensemble confidence: ${(result.confidence * 100).toFixed(0)}%)`);
+        res.json({ success: true, id, estimatedMonthly, ensemble_used: result.ensemble_used });
       } catch (e) {
         console.log('Email skipped (not configured)');
-        res.json({ success: true, id, estimatedMonthly });
+        res.json({ success: true, id, estimatedMonthly, ensemble_used: result.ensemble_used });
       }
     }
   );
