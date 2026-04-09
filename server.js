@@ -8,12 +8,10 @@ const sqlite3 = require('sqlite3').verbose();
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 
-// B MODE INTEGRATION - DISABLED FOR PRODUCTION
-// const WarehouseRouter = require('./b-mode-integration.js');
-// const warehouse = new WarehouseRouter();
-// console.log('🔋 B MODE ACTIVE: Warehouse project routing through ensemble + learning');
-
-const warehouse = null; // Placeholder for B Mode (to be enabled later)
+// B MODE INTEGRATION
+const WarehouseRouter = require('./b-mode-integration.js');
+const warehouse = new WarehouseRouter();
+console.log('🔋 B MODE ACTIVE: Warehouse project routing through ensemble + learning');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
