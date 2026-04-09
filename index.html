@@ -124,6 +124,15 @@
     }
   }
   </script>
+  
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLACEHOLDER"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PLACEHOLDER');
+  </script>
 </head>
 <body>
 
@@ -371,7 +380,7 @@
           </div>
         </div>
       </div>
-      <form class="inquiry-form" id="inquiryForm">
+      <form class="inquiry-form" id="inquiryForm" name="inquiry" method="POST" netlify>
         <div class="form-group">
           <input type="text" name="name" id="name" placeholder="Your Name" required>
         </div>
