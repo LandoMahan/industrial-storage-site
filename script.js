@@ -1,25 +1,19 @@
-// FORM SUBMISSION
+// FORM SUBMISSION - Using Formspree for email
 const inquiryForm = document.getElementById('inquiryForm');
 if (inquiryForm) {
   inquiryForm.addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const formData = {
-      name: document.getElementById('name').value,
-      email: document.getElementById('email').value,
-      company: document.getElementById('company').value,
-      phone: document.getElementById('phone').value,
-      sqft: document.getElementById('sqft').value,
-      details: document.getElementById('details').value
-    };
-
+    const formData = new FormData(inquiryForm);
+    
     try {
-      const response = await fetch('/api/inquiry', {
+      // Send to Formspree endpoint for johnmahan@westpatrick.com
+      const response = await fetch('https://formspree.io/f/xyzjkbnl', {
         method: 'POST',
+        body: formData,
         headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
+          'Accept': 'application/json'
+        }
       });
 
       if (response.ok) {
