@@ -9,9 +9,12 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
+console.log('🚀 Server starting...');
+console.log('PORT:', PORT);
+console.log('Static files from:', path.join(__dirname));
+
 // Basic routes
 app.get('/', (req, res) => {
-  console.log('Serving index.html from:', path.join(__dirname, 'index.html'));
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
@@ -29,10 +32,15 @@ app.get('/faq', (req, res) => {
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString(), version: 'v2-apr16-1637' });
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    version: 'APRIL_16_2026_FIXED',
+    updated: true
+  });
 });
 
-// Form submission - just accept and log for now
+// Form submission - just accept and log
 app.post('/api/inquiry', (req, res) => {
   const { name, company, email, phone, sqft, details } = req.body;
 
@@ -42,10 +50,8 @@ app.post('/api/inquiry', (req, res) => {
 
   const estimatedMonthly = (parseFloat(sqft) * 1.20).toFixed(2);
   
-  console.log('Form submission:', { name, company, email, phone, sqft, details });
+  console.log('✓ Form submission:', { name, company, email, phone, sqft });
 
-  // For now, just return success
-  // We can add email sending once we get it running
   res.json({ 
     success: true, 
     id: Date.now().toString(),
@@ -54,8 +60,23 @@ app.post('/api/inquiry', (req, res) => {
   });
 });
 
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not found' });
+});
+
 // Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Visit: http://localhost:${PORT}`);
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log('');
+  console.log('═══════════════════════════════════');
+  console.log('✅ 2882 Storage Website RUNNING');
+  console.log('═══════════════════════════════════');
+  console.log('URL: http://0.0.0.0:' + PORT);
+  console.log('Health: GET /api/health');
+  console.log('');
+});
+
+process.on('SIGTERM', () => {
+  console.log('Shutting down...');
+  server.close(() => process.exit(0));
 });
