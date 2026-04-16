@@ -8,7 +8,7 @@ if (inquiryForm) {
     
     try {
       // Send to Formspree endpoint for johnmahan@westpatrick.com
-      const response = await fetch('https://formspree.io/f/mpwagdkp', {
+      const response = await fetch('https://formspree.io/f/mojyepvj', {
         method: 'POST',
         body: formData,
         headers: {
