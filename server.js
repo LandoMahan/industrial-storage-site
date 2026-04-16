@@ -11,6 +11,7 @@ app.use(express.static(path.join(__dirname)));
 
 // Basic routes
 app.get('/', (req, res) => {
+  console.log('Serving index.html from:', path.join(__dirname, 'index.html'));
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
@@ -28,7 +29,7 @@ app.get('/faq', (req, res) => {
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.json({ status: 'ok', timestamp: new Date().toISOString(), version: 'v2-apr16-1637' });
 });
 
 // Form submission - just accept and log for now
